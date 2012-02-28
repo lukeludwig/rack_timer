@@ -5,6 +5,8 @@ module ActionDispatch
     # each middleware takes to execute
     class RackTimer
 
+      LogThreshold = 1.0 # millisecond
+
       def initialize(app)
         @app = app
       end
@@ -12,8 +14,10 @@ module ActionDispatch
       def call(env)
         # skip over the first middleware
         if env.has_key?("MIDDLEWARE_TIMESTAMP")
-          Rails.logger.info ">>>>>> #{env["MIDDLEWARE_TIMESTAMP"][0]}: #{(Time.now.to_f - env["MIDDLEWARE_TIMESTAMP"][1].to_f) * 1000} ms"
-          env["MIDDLEWARE_TIMESTAMP"][1]
+          time_taken = (Time.now.to_f - env["MIDDLEWARE_TIMESTAMP"][1].to_f) * 1000 
+          if time_taken > LogThreshold # only log if took greater than 1 ms
+            Rails.logger.info "Rack Timer -- #{env["MIDDLEWARE_TIMESTAMP"][0]}: #{time_taken} ms"
+          end
         end
         env["MIDDLEWARE_TIMESTAMP"] = [@app.class.to_s, Time.now]
         @app.call env
