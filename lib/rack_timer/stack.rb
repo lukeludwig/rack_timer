@@ -12,12 +12,16 @@ module ActionDispatch
       end
 
       def call(env)
-        # skip over the first middleware
-        if env.has_key?("MIDDLEWARE_TIMESTAMP")
+        if env.has_key?("MIDDLEWARE_TIMESTAMP") # skip over the first middleware
           time_taken = (Time.now.to_f - env["MIDDLEWARE_TIMESTAMP"][1].to_f) * 1000 
-          if time_taken > LogThreshold # only log if took greater than 1 ms
+          if time_taken > LogThreshold # only log if took greater than LogThreshold
             Rails.logger.info "Rack Timer -- #{env["MIDDLEWARE_TIMESTAMP"][0]}: #{time_taken} ms"
           end
+        elsif env.has_key?("HTTP_X_REQUEST_START")
+          # if we are tracking request queuing time then lets see how much time was spent in the request
+          # queue by taking the difference between Time.now from the start of the first piece of middleware
+          queue_start_time = env["HTTP_X_REQUEST_START"].gsub("t=", "").to_i
+          Rails.logger.info "Rack Timer -- Queuing time: #{(Time.now.to_f * 1000000).to_i - queue_start_time} microseconds"
         end
         env["MIDDLEWARE_TIMESTAMP"] = [@app.class.to_s, Time.now]
         @app.call env
