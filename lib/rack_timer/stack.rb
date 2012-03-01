@@ -20,6 +20,7 @@ module ActionDispatch
         elsif env.has_key?("HTTP_X_REQUEST_START")
           # if we are tracking request queuing time then lets see how much time was spent in the request
           # queue by taking the difference between Time.now from the start of the first piece of middleware
+          Rails.logger.info "Rack Timer -- #{env['HTTP_X_REQUEST_START']}"
           queue_start_time = env["HTTP_X_REQUEST_START"].gsub("t=", "").to_i
           Rails.logger.info "Rack Timer -- Queuing time: #{(Time.now.to_f * 1000000).to_i - queue_start_time} microseconds"
         end
