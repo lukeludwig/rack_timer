@@ -1,1 +1,17 @@
-Provides timing output around each of your Rails rack-based middleware classes.
+Rack Timer provides timing output around each of your Rails rack-based middleware classes. It will log output to your Rails application log.
+
+To use, simply add rack_timer to your Gemfile:
+
+gem "rack_timer"
+
+By default the gem will only log Middleware that takes longer than the default Log Threshold of 1.0 ms. Set the RACK_TIMER_LOG_THRESHOLD environment variable to tweak this.
+
+Example output of Rack Timer with RACK_TIMER_LOG_THRESHOLD = 0.0:
+
+INSERT OUTPUT HERE
+
+If you are tracking request queuing time via New Relic's suggested header (HTTP_X_REQUEST_START or HTTP_X_QUEUE_START), then Rack Timer will output how much time elapsed between when this header was set and when the first piece of middleware executes. See New Relic's documentation for more info: https://newrelic.com/docs/features/tracking-front-end-time
+
+
+ 
+
