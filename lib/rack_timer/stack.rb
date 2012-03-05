@@ -17,11 +17,12 @@ module ActionDispatch
           if elapsed_time > LogThreshold # only log if took greater than LogThreshold
             Rails.logger.info "Rack Timer -- #{env["MIDDLEWARE_TIMESTAMP"][0]}: #{elapsed_time} ms"
           end
-        elsif env.has_key?("HTTP_X_REQUEST_START")
-          # if we are tracking request queuing time via New Relic's suggested header,
+        elsif env.has_key?("HTTP_X_REQUEST_START") or env.has_key?("HTTP_X_QUEUE_START")
+          # if we are tracking request queuing time via New Relic's suggested header(s),
           # then lets see how much time was spent in the request queue by taking the difference
           # between Time.now from the start of the first piece of middleware
-          queue_start_time = env["HTTP_X_REQUEST_START"].gsub("t=", "").to_i
+          # prefer HTTP_X_QUEUE_START over HTTP_X_REQUEST_START in case both exist
+          queue_start_time = (env["HTTP_X_QUEUE_START"] || env["HTTP_X_REQUEST_START"]).gsub("t=", "").to_i
           Rails.logger.info "Rack Timer -- Queuing time: #{(Time.now.to_f * 1000000).to_i - queue_start_time} microseconds"
         end
         env["MIDDLEWARE_TIMESTAMP"] = [@app.class.to_s, Time.now]
