@@ -5,7 +5,7 @@ module ActionDispatch
     # each middleware takes to execute
     class RackTimer
 
-      LogThreshold = ENV['RACK_TIMER_LOG_THRESHOLD'].to_f || 1.0 # millisecond
+      LogThreshold = ENV.has_key?('RACK_TIMER_LOG_THRESHOLD') ? ENV['RACK_TIMER_LOG_THRESHOLD'].to_f : 1.0 # millisecond
 
       def initialize(app)
         @app = app
