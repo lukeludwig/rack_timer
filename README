@@ -6,11 +6,40 @@ gem "rack_timer"
 
 By default the gem will only log Middleware that takes longer than the default Log Threshold of 1.0 ms. Set the RACK_TIMER_LOG_THRESHOLD environment variable to tweak this.
 
+If you are tracking request queuing time via New Relic's suggested header (HTTP_X_REQUEST_START or HTTP_X_QUEUE_START), then Rack Timer will output how much time elapsed between when this header was set and when the first piece of middleware executes. See New Relic's documentation for more info: https://newrelic.com/docs/features/tracking-front-end-time
+
+
 Example output of Rack Timer with RACK_TIMER_LOG_THRESHOLD = 0.0:
 
-INSERT OUTPUT HERE
+Rack Timer -- Queuing time: 1203 microseconds
+Rack Timer -- Ngin::MiddlewareStart: 0.02288818359375 ms
+Rack Timer -- Rack::Lock: 0.0150203704833984 ms
+Rack Timer -- ActiveSupport::Cache::Strategy::LocalCache: 0.0181198120117188 ms
+Rack Timer -- Rack::Runtime: 0.0121593475341797 ms
 
-If you are tracking request queuing time via New Relic's suggested header (HTTP_X_REQUEST_START or HTTP_X_QUEUE_START), then Rack Timer will output how much time elapsed between when this header was set and when the first piece of middleware executes. See New Relic's documentation for more info: https://newrelic.com/docs/features/tracking-front-end-time
+
+Started GET "/page/show/358660-history" for 75.146.189.233 at Mon Mar 05 13:37:30 -0800 2012
+Rack Timer -- Rails::Rack::Logger: 0.110149383544922 ms
+Rack Timer -- ActionDispatch::ShowExceptions: 0.00905990600585938 ms
+Rack Timer -- ActionDispatch::RemoteIp: 0.0131130218505859 ms
+Rack Timer -- Rack::Sendfile: 0.00691413879394531 ms
+Rack Timer -- ActionDispatch::Callbacks: 0.0200271606445312 ms
+Rack Timer -- ActiveRecord::ConnectionAdapters::ConnectionManagement: 0.00691413879394531 ms
+Rack Timer -- ActiveRecord::QueryCache: 0.0360012054443359 ms
+Rack Timer -- ActionDispatch::Cookies: 0.00691413879394531 ms
+Rack Timer -- ActionDispatch::Session::CookieStore: 0.0231266021728516 ms
+Rack Timer -- ActionDispatch::Flash: 1.24096870422363 ms
+Rack Timer -- ActionDispatch::ParamsParser: 0.0169277191162109 ms
+Rack Timer -- Rack::MethodOverride: 0.00786781311035156 ms
+Rack Timer -- ActionDispatch::Head: 0.00810623168945312 ms
+Rack Timer -- ActionDispatch::BestStandardsSupport: 0.00691413879394531 ms
+Rack Timer -- Warden::Manager: 0.0591278076171875 ms
+Rack Timer -- NewRelic::Rack::BrowserMonitoring: 0.00715255737304688 ms
+  Processing by PageController#show as HTML
+
+
+The Queuing time shows that with this request, 1203 microseconds (1.2 milliseconds) elapsed from the time Nginx set the HTTP_X_REQUEST_START header and the start of the first piece of middleware. Each subsequent Rack Timer output line shows how long each piece of middleware took to execute in milliseconds. Turns out that all of the standard Rails middleware classes are generally fast, which is a good thing!
+
 
 
  
