@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name        = "rack_timer"
   s.version     = RackTimer::VERSION
   s.authors     = ["lukeludwig"]
-  s.email       = ["luke.ludwig@tstmedia.com"]
-  s.homepage    = "http://www.github.com/tstmedia/rack_timer"
+  s.email       = ["luke@lukeludwig.com"]
+  s.homepage    = "http://www.github.com/lukeludwig/rack_timer"
   s.summary     = %q{Provides timing output around each of your Rails rack-based middleware classes.}
   s.description = %q{Provides timing output around each of your Rails rack-based middleware classes.}
 
