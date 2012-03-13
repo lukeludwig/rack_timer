@@ -11,34 +11,58 @@ If you are tracking request queuing time via New Relic's suggested header (HTTP_
 
 Example output of Rack Timer with RACK_TIMER_LOG_THRESHOLD = 0.0:
 
-Rack Timer -- Queuing time: 1203 microseconds
-Rack Timer -- Ngin::MiddlewareStart: 0.02288818359375 ms
-Rack Timer -- Rack::Lock: 0.0150203704833984 ms
-Rack Timer -- ActiveSupport::Cache::Strategy::LocalCache: 0.0181198120117188 ms
-Rack Timer -- Rack::Runtime: 0.0121593475341797 ms
+Rack Timer -- Queuing time: 1723 microseconds
+Rack Timer (incoming) -- Rack::Lock: 0.019073486328125 ms
+Rack Timer (incoming) -- ActiveSupport::Cache::Strategy::LocalCache: 0.0209808349609375 ms
+Rack Timer (incoming) -- Rack::Runtime: 0.0140666961669922 ms
 
 
-Started GET "/page/show/358660-history" for 75.146.189.233 at Mon Mar 05 13:37:30 -0800 2012
-Rack Timer -- Rails::Rack::Logger: 0.110149383544922 ms
-Rack Timer -- ActionDispatch::ShowExceptions: 0.00905990600585938 ms
-Rack Timer -- ActionDispatch::RemoteIp: 0.0131130218505859 ms
-Rack Timer -- Rack::Sendfile: 0.00691413879394531 ms
-Rack Timer -- ActionDispatch::Callbacks: 0.0200271606445312 ms
-Rack Timer -- ActiveRecord::ConnectionAdapters::ConnectionManagement: 0.00691413879394531 ms
-Rack Timer -- ActiveRecord::QueryCache: 0.0360012054443359 ms
-Rack Timer -- ActionDispatch::Cookies: 0.00691413879394531 ms
-Rack Timer -- ActionDispatch::Session::CookieStore: 0.0231266021728516 ms
-Rack Timer -- ActionDispatch::Flash: 1.24096870422363 ms
-Rack Timer -- ActionDispatch::ParamsParser: 0.0169277191162109 ms
-Rack Timer -- Rack::MethodOverride: 0.00786781311035156 ms
-Rack Timer -- ActionDispatch::Head: 0.00810623168945312 ms
-Rack Timer -- ActionDispatch::BestStandardsSupport: 0.00691413879394531 ms
-Rack Timer -- Warden::Manager: 0.0591278076171875 ms
-Rack Timer -- NewRelic::Rack::BrowserMonitoring: 0.00715255737304688 ms
+Started GET "/page/show/298883-home" for 75.146.189.233 at Tue Mar 13 05:55:20 -0700 2012
+Rack Timer (incoming) -- Rails::Rack::Logger: 0.123023986816406 ms
+Rack Timer (incoming) -- ActionDispatch::ShowExceptions: 0.00905990600585938 ms
+Rack Timer (incoming) -- ActionDispatch::RemoteIp: 0.0140666961669922 ms
+Rack Timer (incoming) -- Rack::Sendfile: 0.0119209289550781 ms
+Rack Timer (incoming) -- ActionDispatch::Callbacks: 0.0219345092773438 ms
+Rack Timer (incoming) -- ActiveRecord::ConnectionAdapters::ConnectionManagement: 0.00905990600585938 ms
+Rack Timer (incoming) -- ActiveRecord::QueryCache: 0.0360012054443359 ms
+Rack Timer (incoming) -- ActionDispatch::Cookies: 0.00905990600585938 ms
+Rack Timer (incoming) -- ActionDispatch::Session::CookieStore: 0.0269412994384766 ms
+Rack Timer (incoming) -- ActionDispatch::Flash: 0.581979751586914 ms
+Rack Timer (incoming) -- ActionDispatch::ParamsParser: 0.019073486328125 ms
+Rack Timer (incoming) -- Rack::MethodOverride: 0.0100135803222656 ms
+Rack Timer (incoming) -- ActionDispatch::Head: 0.00905990600585938 ms
+Rack Timer (incoming) -- ActionDispatch::BestStandardsSupport: 0.00786781311035156 ms
+Rack Timer (incoming) -- Warden::Manager: 0.0669956207275391 ms
+Rack Timer (incoming) -- NewRelic::Rack::BrowserMonitoring: 0.00882148742675781 ms
+Rack Timer (incoming) -- OmniAuth::Strategies::Facebook: 0.0569820404052734 ms
   Processing by PageController#show as HTML
+  Parameters: {"id"=>"298883-home"}
+Completed 200 OK in 1552ms (Views: 648.2ms | ActiveRecord: 446.4ms)
+Rack Timer (Application Action) -- ActionDispatch::Routing::RouteSet: 1575.03509521484 ms
+Rack Timer (outgoing) -- OmniAuth::Strategies::Facebook: 0.0109672546386719 ms
+Rack Timer (outgoing) -- NewRelic::Rack::BrowserMonitoring: 0.0259876251220703 ms
+Rack Timer (outgoing) -- Warden::Manager: 0.0150203704833984 ms
+Rack Timer (outgoing) -- ActionDispatch::BestStandardsSupport: 0.0100135803222656 ms
+Rack Timer (outgoing) -- ActionDispatch::Head: 0.00905990600585938 ms
+Rack Timer (outgoing) -- Rack::MethodOverride: 0.00905990600585938 ms
+Rack Timer (outgoing) -- ActionDispatch::ParamsParser: 0.0100135803222656 ms
+Rack Timer (outgoing) -- ActionDispatch::Flash: 0.0138282775878906 ms
+Rack Timer (outgoing) -- ActionDispatch::Session::CookieStore: 0.223159790039062 ms
+Rack Timer (outgoing) -- ActionDispatch::Cookies: 0.0920295715332031 ms
+Rack Timer (outgoing) -- ActiveRecord::QueryCache: 0.0140666961669922 ms
+Rack Timer (outgoing) -- ActiveRecord::ConnectionAdapters::ConnectionManagement: 0.113010406494141 ms
+Rack Timer (outgoing) -- ActionDispatch::Callbacks: 0.0121593475341797 ms
+Rack Timer (outgoing) -- Rack::Sendfile: 0.0138282775878906 ms
+Rack Timer (outgoing) -- ActionDispatch::RemoteIp: 0.00786781311035156 ms
+Rack Timer (outgoing) -- ActionDispatch::ShowExceptions: 0.0131130218505859 ms
+Rack Timer (outgoing) -- Rails::Rack::Logger: 1.23691558837891 ms
+Rack Timer (outgoing) -- Rack::Runtime: 0.0350475311279297 ms
+Rack Timer (outgoing) -- ActiveSupport::Cache::Strategy::LocalCache: 0.0121593475341797 ms
+Rack Timer (outgoing) -- Rack::Lock: 0.0231266021728516 ms
 
 
-The Queuing time shows that with this request, 1203 microseconds (1.2 milliseconds) elapsed from the time Nginx set the HTTP_X_REQUEST_START header and the start of the first piece of middleware. Each subsequent Rack Timer output line shows how long each piece of middleware took to execute in milliseconds. Turns out that all of the standard Rails middleware classes are generally fast, which is a good thing!
+
+The Queuing time shows that with this request, 1203 microseconds (1.2 milliseconds) elapsed from the time Nginx set the HTTP_X_REQUEST_START header and the start of the first piece of middleware. Each subsequent Rack Timer output line shows how long each piece of middleware took to execute in milliseconds. The Rack Timer (incoming) timestamps show elapsed time of the middleware class prior to executing the application's action. The Rack Timer (outgoing) timestamps show elapsed time of the middleware class after the application's action. The Rack Timer (Application Action) timestamp shows the elapsed time of the application's action and the final piece of middleware, Rails routing. Turns out that all of the standard Rails middleware classes are generally fast, which is a good thing!
 
 
 
