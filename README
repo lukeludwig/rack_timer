@@ -1,4 +1,4 @@
-Rack Timer provides timing output around each of your Rails rack-based middleware classes. It will log output to your Rails application log.
+Rack Timer provides timing output around each of your Rails rack-based middleware classes. It will log output to your Rails application log. Rack Timer has been tested with Rails 3.0.10, and it appears slightly incompatible with Rails 3.1.x.
 
 To use, simply add rack_timer to your Gemfile:
 
